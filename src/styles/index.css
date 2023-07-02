@@ -37,3 +37,12 @@ input
     display: flex;
     justify-content: space-between;
 }
+
+@media only screen and (max-width: 768px) {
+    .cv
+    {
+        display: flex;
+        flex-direction: column;
+        gap: 10rem;
+    }
+}
