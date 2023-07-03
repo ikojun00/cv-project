@@ -1,22 +1,22 @@
 import React from "react";
 
-const Overview = (props) => {
-  console.log(props);
+const Overview = ( {data} ) => {
+  console.log(data);
   return (
     <div className="cvPaper">
       <div className="header">
         <div className="headerName">
-            <h1>{props.data.basicInfo.firstName} {props.data.basicInfo.lastName}</h1>
+            <h1>{data.basicInfo.firstName} {data.basicInfo.lastName}</h1>
         </div>
         <div className="headerOther">
-            <p>{props.data.basicInfo.email}</p>
-            <p>{props.data.basicInfo.phone}</p>
-            <p>{props.data.basicInfo.residence}</p>
+            <p>{data.basicInfo.email}</p>
+            <p>{data.basicInfo.phone}</p>
+            <p>{data.basicInfo.residence}</p>
         </div>
       </div>
       <h2>Work experience</h2>
       <hr />
-      {props.data.workExperience.map((task) => (
+      {data.workExperience.map((task) => (
         <div key={task.id}>
           <br />
           <strong>{task.company}</strong>
@@ -29,7 +29,7 @@ const Overview = (props) => {
       <br />
       <h2>Education</h2>
       <hr />
-      {props.data.education.map((task) => (
+      {data.education.map((task) => (
         <div key={task.id}>
           <div className="workExperience">
             <p>{task.university}</p>
@@ -41,7 +41,7 @@ const Overview = (props) => {
       <h2>Technical skills</h2>
       <hr />
       <ul>
-      {props.data.skills.map((task) => (
+      {data.skills.map((task) => (
         <li key={task.id}>
             <p>{task.skill} - {task.achievedAt}</p>
         </li>
@@ -50,8 +50,8 @@ const Overview = (props) => {
       <br />
       <h2>Other skills and interests</h2>
       <hr />
-      <p>Languages: {props.data.otherSkills.languages}</p>
-      <p>Hobbies: {props.data.otherSkills.hobbies}</p>
+      <p>Languages: {data.otherSkills.languages}</p>
+      <p>Hobbies: {data.otherSkills.hobbies}</p>
     </div>
   );
 };

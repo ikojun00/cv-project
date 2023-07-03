@@ -1,4 +1,207 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import "../styles/index.css";
+import uniqid from "uniqid";
+import Overview from './Overview';
+
+const CVForm = () => {
+  const [basicInfo, setBasicInfo] = useState({
+    firstName: 'John',
+    lastName: 'Doe',
+    email: 'johndoe@example.com',
+    phone: '+123 45 565 2322',
+    residence: 'Beograd, Serbia'
+  });
+
+  const [workExperience, setWorkExperience] = useState([
+    {
+      id: uniqid(),
+      company: 'Google',
+      position: 'Intern',
+      startDate: 'May 2022',
+      endDate: 'Present'
+    }
+  ]);
+
+  const [education, setEducation] = useState([
+    {
+      id: uniqid(),
+      university: 'Harvard',
+      startDate: 'October 2020',
+      endDate: 'Present'
+    }
+  ]);
+
+  const [skills, setSkills] = useState([
+    {
+      id: uniqid(),
+      skill: 'JavaScript',
+      achievedAt: 'used at university courses'
+    }
+  ]);
+
+  const [otherSkills, setOtherSkills] = useState({
+    languages: 'English (native), German (fluent)',
+    hobbies: 'football, rugby, MMA...'
+  });
+
+  const handleChange = (e, section, index) => {
+    const { name, value } = e.target;
+    if (section === basicInfo || section === otherSkills) {
+      const updatedSection = { ...section, [name]: value };
+      if (section === basicInfo) {
+        setBasicInfo(updatedSection);
+      } else {
+        setOtherSkills(updatedSection);
+      }
+    } else {
+      const updatedSection = [...section];
+      updatedSection[index] = { ...updatedSection[index], [name]: value };
+      switch (section) {
+        case workExperience:
+          setWorkExperience(updatedSection);
+          break;
+        case education:
+          setEducation(updatedSection);
+          break;
+        case skills:
+          setSkills(updatedSection);
+          break;
+        default:
+          break;
+      }
+    }
+  };
+
+  const handleAddInput = (section, defaultData) => {
+    const newInput = {
+      id: uniqid(),
+      ...defaultData
+    };
+    switch (section) {
+      case workExperience:
+        setWorkExperience(prevSection => [...prevSection, newInput]);
+        break;
+      case education:
+        setEducation(prevSection => [...prevSection, newInput]);
+        break;
+      case skills:
+        setSkills(prevSection => [...prevSection, newInput]);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleRemoveInput = (section, id) => {
+    switch (section) {
+      case workExperience:
+        setWorkExperience(prevSection => prevSection.filter(input => input.id !== id));
+        break;
+      case education:
+        setEducation(prevSection => prevSection.filter(input => input.id !== id));
+        break;
+      case skills:
+        setSkills(prevSection => prevSection.filter(input => input.id !== id));
+        break;
+      default:
+        break;
+    }
+  };
+
+  const renderInputs = (section, defaultData) => {
+    return section.map((input, index) => (
+      <div key={input.id} className="cvEditor">
+        {Object.keys(defaultData).map((key) => (
+          <label key={key}>
+            {key[0].toUpperCase() + key.substring(1).replace(/([A-Z])/g, ' $1').toLowerCase() + ':'}
+            <input
+              type="text"
+              name={key}
+              value={input[key]}
+              onChange={(event) => handleChange(event, section, index)}
+            />
+          </label>
+        ))}
+        <br />
+        <button onClick={() => handleRemoveInput(section, input.id)}>Remove</button>
+        <br />
+      </div>
+    ));
+  };
+
+  return (
+    <div className="cv">
+      <div className="cvEditor">
+        <h2>Personal details</h2>
+        {Object.keys(basicInfo).map((key) => (
+          <label key={key}>
+            {key[0].toUpperCase() + key.substring(1).replace(/([A-Z])/g, ' $1').toLowerCase() + ':'}
+            <input
+              type="text"
+              name={key}
+              value={basicInfo[key]}
+              onChange={(event) => handleChange(event, basicInfo)}
+            />
+          </label>
+        ))}
+        <br />
+        <h2>Work experience</h2>
+        {renderInputs(workExperience, {
+          company: 'Google',
+          position: 'Software Engineer',
+          startDate: '2020',
+          endDate: '2021'
+        })}
+        <button onClick={() => handleAddInput(workExperience, {
+          company: 'Google',
+          position: 'Intern',
+          startDate: 'May 2022',
+          endDate: 'Present'
+        })}>Add Input</button>
+        <br />
+        <h2>Education</h2>
+        {renderInputs(education, {
+          university: 'Harvard',
+          startDate: 'October 2020',
+          endDate: 'Present'
+        })}
+        <button onClick={() => handleAddInput(education, {
+          university: 'Harvard',
+          startDate: 'October 2020',
+          endDate: 'Present'
+        })}>Add Input</button>
+        <br />
+        <h2>Technical skills</h2>
+        {renderInputs(skills, {
+          skill: 'JavaScript',
+          achievedAt: 'used at university courses'
+        })}
+        <button onClick={() => handleAddInput(skills, {
+          skill: 'JavaScript',
+          achievedAt: 'used at university courses'
+        })}>Add Input</button>
+        <br />
+        <h2>Other skills and interests</h2>
+        {Object.keys(otherSkills).map((key) => (
+          <label key={key}>
+            {key[0].toUpperCase() + key.substring(1).replace(/([A-Z])/g, ' $1').toLowerCase() + ':'}
+            <input
+              type="text"
+              name={key}
+              value={otherSkills[key]}
+              onChange={(event) => handleChange(event, otherSkills)}
+            />
+          </label>
+        ))}
+      </div>
+      <Overview data={{ basicInfo, workExperience, education, skills, otherSkills }} />
+    </div>
+  );
+};
+
+export default CVForm;
+
+/*import React, { Component } from 'react';
 import "../styles/index.css";
 import uniqid from "uniqid";
 import Overview from './Overview';
@@ -164,4 +367,4 @@ class CVForm extends Component {
   }
 }
 
-export default CVForm;
+export default CVForm;*/
