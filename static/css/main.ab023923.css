@@ -1,0 +1,2 @@
+.cv{display:flex;flex-direction:row;justify-content:space-around}.cvEditor{display:flex;flex-direction:column}.cvPaper{border:solid;height:70rem;overflow:auto;padding:1.5rem 2rem;width:40rem}.header{display:flex;flex-direction:row;justify-content:space-between}input{height:1rem;margin-left:.5rem}.workExperience{display:flex;justify-content:space-between}@media only screen and (max-width:768px){.cv{display:flex;flex-direction:column;gap:10rem}}
+/*# sourceMappingURL=main.ab023923.css.map*/
