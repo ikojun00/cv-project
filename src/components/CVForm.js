@@ -116,6 +116,7 @@ const CVForm = () => {
             {key[0].toUpperCase() + key.substring(1).replace(/([A-Z])/g, ' $1').toLowerCase() + ':'}
             <input
               type="text"
+              maxLength="40"
               name={key}
               value={input[key]}
               onChange={(event) => handleChange(event, section, index)}
@@ -138,6 +139,7 @@ const CVForm = () => {
             {key[0].toUpperCase() + key.substring(1).replace(/([A-Z])/g, ' $1').toLowerCase() + ':'}
             <input
               type="text"
+              maxLength="40"
               name={key}
               value={basicInfo[key]}
               onChange={(event) => handleChange(event, basicInfo)}
@@ -187,6 +189,7 @@ const CVForm = () => {
             {key[0].toUpperCase() + key.substring(1).replace(/([A-Z])/g, ' $1').toLowerCase() + ':'}
             <input
               type="text"
+              maxLength="40"
               name={key}
               value={otherSkills[key]}
               onChange={(event) => handleChange(event, otherSkills)}
